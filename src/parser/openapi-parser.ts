@@ -14,8 +14,9 @@ export class OpenAPIParser {
     try {
       const parsed = JSON.parse(specString);
       return this.parseObject(parsed);
-    } catch (error) {
-      throw new Error(`Failed to parse OpenAPI spec: ${error.message}`);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      throw new Error(`Failed to parse OpenAPI spec: ${message}`);
     }
   }
 
@@ -98,14 +99,15 @@ export class OpenAPIParser {
     }> = [];
 
     for (const [path, pathItem] of Object.entries(paths)) {
-      const methods = ['get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace'];
+      const methods: Array<keyof ExtendedPathItem> = ['get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace'];
       
       for (const method of methods) {
-        if (pathItem[method]) {
+        const operation = pathItem[method];
+        if (operation && typeof operation === 'object') {
           operations.push({
             path,
             method,
-            operation: pathItem[method] as ExtendedOperation,
+            operation: operation as ExtendedOperation,
           });
         }
       }
