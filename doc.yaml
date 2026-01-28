@@ -1,0 +1,4029 @@
+---
+openapi: 3.0.3
+info:
+  title: FastDataHub API
+  version: 1.0.0
+  description: Documentação da API DataHub
+  contact:
+    name: Zoox Smart Data
+    url: https://zooxsmart.com
+servers:
+- url: https://datahub.zooxsmart.com
+  description: Produção
+tags:
+- name: Pessoa Física (PF)
+  description: Endpoints de Pessoa Física (PF)
+- name: Pessoa Jurídica (PJ)
+  description: Endpoints de Pessoa Jurídica (PJ)
+- name: Veículo
+  description: Endpoints de Veículo
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+security:
+- ApiKeyAuth: []
+paths:
+  "/person/cpf?datasets=addresses_extended":
+    post:
+      summary: Addresses Extended
+      description: Contém informações sobre os endereços, como tipo, titulo, logradouro,
+        número, complemento, bairro, cidade, uf, cep, tipo de endereço e prioridade.
+      operationId: post_addresses_extended
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  addresses_extended:
+                    type: object
+                    description: Contém informações sobre os endereços, como tipo,
+                      titulo, logradouro, número, complemento, bairro, cidade, uf,
+                      cep, tipo de endereço e prioridade.
+                    properties:
+                      addresses_extended:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            endereco_completo:
+                              type: string
+                              description: Endereço Completo
+                              example: RUA EQUADOR 2022
+                            tipo:
+                              type: string
+                              description: Tipo
+                              example: RUA
+                            titulo:
+                              type: string
+                              description: Titulo
+                              example: DOUTOR
+                            logradouro:
+                              type: string
+                              description: Logradouro
+                              example: JOSE
+                            numero:
+                              type: string
+                              description: Número
+                              example: '40'
+                            complemento:
+                              type: string
+                              description: Complemento
+                              example: CS 4
+                            bairro:
+                              type: string
+                              description: Bairro
+                              example: BAIRRO ZOOX
+                            cidade:
+                              type: string
+                              description: Cidade
+                              example: RIO DE JANEIRO
+                            uf:
+                              type: string
+                              description: UF
+                              example: SP
+                            cep:
+                              type: string
+                              description: CEP
+                              example: 11111000
+                            tipo_endereco:
+                              type: string
+                              description: Tipo de endereço
+                              example: TRABALHO
+                            prioridade:
+                              type: integer
+                              description: Prioridade
+                              example: 1
+                            latitude:
+                              type: string
+                              description: Latitude do endereço da empresa
+                              example: 41.40338
+                            longitude:
+                              type: string
+                              description: Longitude do endereço da empresa
+                              example: 2.17403
+                        description: Contém informações sobre os endereços, como tipo,
+                          titulo, logradouro, número, complemento, bairro, cidade,
+                          uf, cep, tipo de endereço e prioridade.
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=arrest_warrants":
+    post:
+      summary: Arrest Warrants
+      description: Descrição pendente.
+      operationId: post_arrest_warrants
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  arrest_warrants:
+                    type: object
+                    properties:
+                      nome_completo:
+                        type: string
+                        example: John Doe
+                      possui_mandados:
+                        type: boolean
+                        example: true
+                      mandados:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            numero:
+                              type: string
+                              example: 3245612-45.2019.8.02.0001.01.0034-22
+                            situacao:
+                              type: string
+                              example: Pendente de Cumprimento
+                            data_mandado:
+                              type: string
+                              example: 23/09/2024
+                            orgao_expedidor:
+                              type: string
+                              example: 7a VARA CRIMINAL DA CAPITAL / TRIBUNAL DO JÚRI
+                            peca:
+                              type: string
+                              example: Mandado de Prisão
+                      url:
+                        type: string
+                        example: https://certidoes-datahub.s3.amazonaws.com/mandados-prisao/grupo-teste/documento_09845678999.pdf
+                      data_emissao:
+                        type: string
+                        example: '09/12/2024 14:43:05'
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=basic_data":
+    post:
+      summary: Basic Data
+      description: Contém informações básicas como documento, nome completo, data
+        de nascimento, genero, status do documento na receita, estado civil e nome
+        da mãe.
+      operationId: post_basic_data
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  basic_data:
+                    type: object
+                    description: Contém informações básicas como documento, nome completo,
+                      data de nascimento, genero, status do documento na receita,
+                      estado civil e nome da mãe.
+                    properties:
+                      cpf:
+                        type: string
+                        description: Documento da pessoa
+                        example: '12211111112'
+                      nome_completo:
+                        type: string
+                        description: Nome
+                        example: ZOOX ARMSTRONG
+                      nome_social:
+                        type: string
+                        description: Nome
+                        example: ZOOX ARMSTRONG
+                      genero:
+                        type: string
+                        description: Gênero
+                        example: M
+                      data_nascimento:
+                        type: string
+                        description: Data de nascimento
+                        example: '1930-08-05'
+                      nacionalidade:
+                        type: string
+                        description: Nacionalidade
+                        example: BRASILEIRA
+                      estado_civil:
+                        type: string
+                        description: Estado civil
+                        example: CASADO
+                      fonte_estado_civil:
+                        type: string
+                        description: Fonte estado civil
+                        example: RECEITA FEDERAL
+                      status_receita_federal:
+                        type: string
+                        description: Status receita federal
+                        example: REGULAR
+                      regiao_receita_federal:
+                        type: string
+                        description: Região receita federal
+                        example: RJ
+                      orgao_emissor:
+                        type: string
+                        description: Orgão emissor do documento
+                        example: RECEITA FEDERAL
+                      indicacao_obito:
+                        type: boolean
+                        description: Indicação óbito
+                      origem_obito:
+                        type: string
+                        description: Origem óbito
+                        example: RECEITA FEDERAL
+                      ano_obito:
+                        type: integer
+                        example: 2012
+                      nome_mae:
+                        type: string
+                        description: Nome da mãe
+                        example: ADA LOVELACE
+                      nome_pai:
+                        type: string
+                        description: Nome do pai
+                        example: ALAN TURING
+                      pis:
+                        type: string
+                        description: Número do PIS
+                        example: '28543286409'
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=business_relationships":
+    post:
+      summary: Business Relationships
+      description: Descrição pendente.
+      operationId: post_business_relationships
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  business_relationships:
+                    type: object
+                    properties:
+                      business_relationships:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            cnpj:
+                              type: string
+                              description: CNPJ da empresa
+                              example: '08668202000118'
+                            razao_social:
+                              type: string
+                              description: Razão social da empresa
+                              example: BANCO DO POVO S.A.
+                            data_abertura:
+                              type: string
+                              description: Data de abertura da empresa
+                              example: 11/03/2022
+                            cnae_classificacao:
+                              type: string
+                              description: CNAE classificação da empresa
+                              example: MERCADOS, SUPERMERCADOS E CONVENIÊNCIA
+                            porte_empresa:
+                              type: string
+                              description: Porte da empresa
+                              example: MÉDIA E GRANDE EMPRESA
+                            faturamento:
+                              type: string
+                              description: Faturamento da empresa
+                              example: ACIMA DE 1BI
+                            qualificacao_socio:
+                              type: string
+                              description: Qualificação do Sócio
+                              example: DIRETOR
+                            situacao_cadastral:
+                              type: string
+                              description: Situação da empresa
+                              example: ATIVA
+                            natureza_juridica:
+                              type: string
+                              description: Natureza Jurídica da empresa
+                              example: '2038'
+                            dt_entrada_sociedade:
+                              type: string
+                              description: Data de entrada na sociedade da empresa
+                              example: 11/07/2023
+                            endereco_completo:
+                              type: string
+                              description: Endereço da empresa
+                              example: Rua Joaquim Couto 43 CENTRO PARATI - RJ - 88693558
+                            municipio:
+                              type: string
+                              description: Cidade da empresa
+                              example: Parati
+                            uf:
+                              type: string
+                              description: Estado da empresa
+                              example: Rio de Janeiro
+                            tipo_logradouro:
+                              type: string
+                              description: Tipo de logradouro da empresa
+                              example: RUA
+                            logradouro:
+                              type: string
+                              description: Logradouro da empresa
+                              example: JOSÉ
+                            numero:
+                              type: string
+                              description: Número do endereço da empresa
+                              example: '23'
+                            complemento:
+                              type: string
+                              description: Complemento do endereço da empresa
+                              example: SALA 6
+                            cep:
+                              type: string
+                              description: CEP da empresa
+                              example: '88693558'
+                            bairro:
+                              type: string
+                              description: Bairro ou distrito da empresa
+                              example: CENTRO
+                            latitude:
+                              type: string
+                              description: Latitude
+                            longitude:
+                              type: string
+                              description: Longitude
+                            mapa:
+                              type: string
+                              description: URL do link do google maps
+                              example: https://www.google.com/maps?q=AVENIDA%20DAS%20AMERICAS%20500%20RIO%20DE%20JANEIRO%20-%20RJ
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=cnh":
+    post:
+      summary: Cnh
+      description: Descrição pendente.
+      operationId: post_cnh
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cnh:
+                    type: object
+                    properties:
+                      numero:
+                        type: string
+                        description: Número da CNH
+                        example: ''
+                      categoria:
+                        type: string
+                        description: Categorias da CNH
+                        example: AB
+                      data_expiracao:
+                        type: string
+                        example: '2022-08-05T03:00:00.000Z'
+                      renach:
+                        type: string
+                        example: PE111111111
+                      primeira_cnh:
+                        type: string
+                        description: Data da primeira CNH
+                        example: '2021-05-01T03:00:00.000Z'
+                      data_emissao:
+                        type: string
+                        example: '2022-08-05T03:00:00.000Z'
+                      guid:
+                        type: string
+                        description: GUID De CNH
+                        example: '04910ab3-fb5c-47cf-863d-57ec083cc067'
+                      nome:
+                        type: string
+                        example: GIOVANNI MARCOS LEITE
+                      nome_mae:
+                        type: string
+                        description: Nome do mãe do portador da CNH
+                        example: MARIA DE NAZARÉ
+                      nome_pai:
+                        type: string
+                        description: Nome do pai do portador da CNH
+                        example: SÃO JOSÉ DE NAZARÉ
+                      email:
+                        type: string
+                        description: Email do portador da CNH
+                        example: GOOGLE@GOOGLE.COM.BR
+                      telefone:
+                        type: string
+                        description: Telefone do portador da CNH
+                        example: '81998998882'
+                      numero_documento:
+                        type: string
+                        description: Número do documento do portador da CNH
+                        example: '00000000000'
+                      data_nascimento:
+                        type: string
+                        description: Data de nascimento do portador da CNH
+                        example: '1998-06-21T03:00:00.000Z'
+                      contagem_debitos:
+                        type: number
+                        example: 0
+                      tipos_debito:
+                        type: string
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=combo_cadastral":
+    post:
+      summary: Combo Cadastral
+      description: Contém informações pessoais básicas e de contato, como documento,
+        nome completo, data de nascimento, genero, status do documento na receita,
+        estado civil, nome da mãe, e-mails, endereços e telefones.
+      operationId: post_combo_cadastral
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  combo_cadastral:
+                    type: object
+                    description: Contém informações pessoais básicas e de contato,
+                      como documento, nome completo, data de nascimento, genero, status
+                      do documento na receita, estado civil, nome da mãe, e-mails,
+                      endereços e telefones.
+                    properties:
+                      dados_basicos:
+                        type: string
+                        description: Contém informações básicas como documento, nome
+                          completo, data de nascimento, genero, status do documento
+                          na receita, estado civil e nome da mãe.
+                      telefones:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ddi:
+                              type: string
+                              description: DDI
+                              example: '55'
+                            ddd:
+                              type: string
+                              description: DDD
+                              example: '21'
+                            numero:
+                              type: string
+                              description: Número
+                              example: '999999999'
+                            tipo:
+                              type: string
+                              description: Tipo
+                              example: MOBILE
+                            prioridade:
+                              type: integer
+                              description: Prioridade
+                              example: 1
+                            possui_whatsapp:
+                              type: boolean
+                              description: Possui Whatsapp
+                              example: true
+                            procon_nao_perturbe:
+                              type: boolean
+                              description: Cadastro no Procon de Não Perturbe
+                              example: true
+                      emails:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                              description: Email
+                              example: ZOOX@ZOOXSMART.COM
+                            dominio:
+                              type: string
+                              description: Dominio
+                              example: "@ZOOXSMART.COM"
+                            usuario:
+                              type: string
+                              description: Usuário
+                              example: ZOOX
+                            tipo:
+                              type: string
+                              description: Tipo
+                              example: PESSOAL
+                            prioridade:
+                              type: integer
+                              description: Prioridade
+                              example: 1
+                      enderecos:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            endereco_completo:
+                              type: string
+                              description: Endereço Completo
+                              example: RUA EQUADOR 2022
+                            tipo:
+                              type: string
+                              description: Tipo
+                              example: RUA
+                            titulo:
+                              type: string
+                              description: Titulo
+                              example: DOUTOR
+                            logradouro:
+                              type: string
+                              description: Logradouro
+                              example: JOSE
+                            numero:
+                              type: string
+                              description: Número
+                              example: '40'
+                            complemento:
+                              type: string
+                              description: Complemento
+                              example: CS 4
+                            bairro:
+                              type: string
+                              description: Bairro
+                              example: BAIRRO ZOOX
+                            cidade:
+                              type: string
+                              description: Cidade
+                              example: RIO DE JANEIRO
+                            uf:
+                              type: string
+                              description: UF
+                              example: SP
+                            cep:
+                              type: string
+                              description: CEP
+                              example: 11111000
+                            tipo_endereco:
+                              type: string
+                              description: Tipo de endereço
+                              example: TRABALHO
+                            prioridade:
+                              type: integer
+                              description: Prioridade
+                              example: 1
+                            latitude:
+                              type: string
+                              description: Latitude do endereço da empresa
+                              example: 41.40338
+                            longitude:
+                              type: string
+                              description: Longitude do endereço da empresa
+                              example: 2.17403
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=credit_complete_pf":
+    post:
+      summary: Credit Complete Pf
+      description: Descrição pendente.
+      operationId: post_credit_complete_pf
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  credit_complete_pf:
+                    type: object
+                    properties:
+                      tr_020_resumo_de_acoes_civeis:
+                        type: string
+                      tr_021_relacao_de_acoes_civeis:
+                        type: string
+                      tr_123_informacoes_complementares:
+                        type: string
+                      tr_131_telefone_vinculado_documento_informado:
+                        type: string
+                      tr_136_resumo_consultas_anteriores:
+                        type: string
+                      tr_137_relacao_consultas_anteriores_credito_segmento:
+                        type: string
+                      tr_142_titulos_protestados:
+                        type: string
+                      tr_146_resumo_titulos_protestados:
+                        type: string
+                      tr_154_debitos:
+                        type: string
+                      tr_108_resumo_ocorrencias_de_debitos:
+                        type: string
+                      tr_241_nome_documentos:
+                        type: string
+                      tr_282_participacoes_do_documento_consultado:
+                        type: string
+                      tr_295_relacao_falencia_recuperacao_judicial:
+                        type: string
+                      tr_500_identificacao:
+                        type: string
+                      tr_501_localizacao:
+                        type: string
+                      tr_502_outras_grafias:
+                        type: string
+                      tr_601_score_classificacao_varios_modelos:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            tr_601_tamanhoRegistro:
+                              type: string
+                              example: '462'
+                            tr_601_tipoRegistro:
+                              type: string
+                              example: '601'
+                            tr_601_registro:
+                              type: string
+                              example: S
+                            tr_601_tipoScore:
+                              type: string
+                              example: '1'
+                            tr_601_score:
+                              type: string
+                              example: '575'
+                            tr_601_valor:
+                              type: string
+                              example: '0'
+                            tr_601_planoExecucao:
+                              type: string
+                              example: "N"
+                            tr_601_modeloPlano:
+                              type: string
+                            tr_601_nomePlano:
+                              type: string
+                            tr_601_modeloScore:
+                              type: string
+                              example: 1D
+                            tr_601_nomeScore:
+                              type: string
+                              example: P5
+                            tr_601_classificacaoNumerica:
+                              type: string
+                              example: '08'
+                            tr_601_classificacaoAlfabetica:
+                              type: string
+                              example: B
+                            tr_601_probabilidade:
+                              type: string
+                              example: '00400'
+                            tr_601_texto:
+                              type: string
+                              example: É provável que 96% das pessoas com esse mesmo
+                                comportamento, paguem suas   contas nos próximos 6
+                                meses.
+                            tr_601_codigoNaturezaModelo:
+                              type: string
+                              example: '115'
+                            tr_601_descricaoNatureza:
+                              type: string
+                              example: POSITIVO PF
+                            tr_601_texto2:
+                              type: string
+                      tr_801_painel_controle_positivo:
+                        type: string
+                      tr_804_status_consumidor:
+                        type: string
+                      tr_940_mensagem_registro:
+                        type: string
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=credit_essential_pf":
+    post:
+      summary: Credit Essential Pf
+      description: Descrição pendente.
+      operationId: post_credit_essential_pf
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  credit_essential_pf:
+                    type: object
+                    properties:
+                      tr_020_resumo_de_acoes_civeis:
+                        type: string
+                      tr_021_relacao_de_acoes_civeis:
+                        type: string
+                      tr_108_resumo_ocorrencias_de_debitos:
+                        type: string
+                      tr_111_resumoConsultas_anteriores_90_dias:
+                        type: string
+                      tr_123_informacoes_complementares:
+                        type: string
+                      tr_124_debitos:
+                        type: string
+                      tr_126_consultas_anteriores:
+                        type: string
+                      tr_142_titulos_protestados:
+                        type: string
+                      tr_146_resumo_titulos_protestados:
+                        type: string
+                      tr_241_nome_documentos:
+                        type: string
+                      tr_282_participacoes_do_documento_consultado:
+                        type: string
+                      tr_295_relacao_falencia_recuperacao_judicial:
+                        type: string
+                      tr_500_identificacao:
+                        type: string
+                      tr_501_localizacao:
+                        type: string
+                      tr_601_score_classificacao_varios_modelos:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            tr_601_tamanhoRegistro:
+                              type: string
+                              example: '462'
+                            tr_601_tipoRegistro:
+                              type: string
+                              example: '601'
+                            tr_601_registro:
+                              type: string
+                              example: S
+                            tr_601_tipoScore:
+                              type: string
+                              example: '1'
+                            tr_601_score:
+                              type: string
+                              example: '575'
+                            tr_601_valor:
+                              type: string
+                              example: '0'
+                            tr_601_planoExecucao:
+                              type: string
+                              example: "N"
+                            tr_601_modeloPlano:
+                              type: string
+                            tr_601_nomePlano:
+                              type: string
+                            tr_601_modeloScore:
+                              type: string
+                              example: 1D
+                            tr_601_nomeScore:
+                              type: string
+                              example: P5
+                            tr_601_classificacaoNumerica:
+                              type: string
+                              example: '08'
+                            tr_601_classificacaoAlfabetica:
+                              type: string
+                              example: B
+                            tr_601_probabilidade:
+                              type: string
+                              example: '00400'
+                            tr_601_texto:
+                              type: string
+                              example: É provável que 96% das pessoas com esse mesmo
+                                comportamento, paguem suas   contas nos próximos 6
+                                meses.
+                            tr_601_codigoNaturezaModelo:
+                              type: string
+                              example: '115'
+                            tr_601_descricaoNatureza:
+                              type: string
+                              example: POSITIVO PF
+                            tr_601_texto2:
+                              type: string
+                      tr_801_painel_controle_positivo:
+                        type: string
+                      tr_804_status_consumidor:
+                        type: string
+                      tr_940_mensagem_registro:
+                        type: string
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=credit_more_pf":
+    post:
+      summary: Credit More Pf
+      description: Descrição pendente.
+      operationId: post_credit_more_pf
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  credit_more_pf:
+                    type: object
+                    properties:
+                      tr_020_resumo_de_acoes_civeis:
+                        type: string
+                      tr_021_relacao_de_acoes_civeis:
+                        type: string
+                      tr_108_resumo_ocorrencias_de_debitos:
+                        type: string
+                      tr_111_resumoConsultas_anteriores_90_dias:
+                        type: string
+                      tr_123_informacoes_complementares:
+                        type: string
+                      tr_124_debitos:
+                        type: string
+                      tr_126_consultas_anteriores:
+                        type: string
+                      tr_131_telefone_vinculado_documento_informado:
+                        type: string
+                      tr_142_titulos_protestados:
+                        type: string
+                      tr_146_resumo_titulos_protestados:
+                        type: string
+                      tr_241_nome_documentos:
+                        type: string
+                      tr_282_participacoes_do_documento_consultado:
+                        type: string
+                      tr_295_relacao_falencia_recuperacao_judicial:
+                        type: string
+                      tr_500_identificacao:
+                        type: string
+                      tr_501_localizacao:
+                        type: string
+                      tr_502_outras_grafias:
+                        type: string
+                      tr_601_score_classificacao_varios_modelos:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            tr_601_tamanhoRegistro:
+                              type: string
+                              example: '462'
+                            tr_601_tipoRegistro:
+                              type: string
+                              example: '601'
+                            tr_601_registro:
+                              type: string
+                              example: S
+                            tr_601_tipoScore:
+                              type: string
+                              example: '1'
+                            tr_601_score:
+                              type: string
+                              example: '575'
+                            tr_601_valor:
+                              type: string
+                              example: '0'
+                            tr_601_planoExecucao:
+                              type: string
+                              example: "N"
+                            tr_601_modeloPlano:
+                              type: string
+                            tr_601_nomePlano:
+                              type: string
+                            tr_601_modeloScore:
+                              type: string
+                              example: 1D
+                            tr_601_nomeScore:
+                              type: string
+                              example: P5
+                            tr_601_classificacaoNumerica:
+                              type: string
+                              example: '08'
+                            tr_601_classificacaoAlfabetica:
+                              type: string
+                              example: B
+                            tr_601_probabilidade:
+                              type: string
+                              example: '00400'
+                            tr_601_texto:
+                              type: string
+                              example: É provável que 96% das pessoas com esse mesmo
+                                comportamento, paguem suas   contas nos próximos 6
+                                meses.
+                            tr_601_codigoNaturezaModelo:
+                              type: string
+                              example: '115'
+                            tr_601_descricaoNatureza:
+                              type: string
+                              example: POSITIVO PF
+                            tr_601_texto2:
+                              type: string
+                      tr_603_decisao:
+                        type: string
+                      tr_801_painel_controle_positivo:
+                        type: string
+                      tr_700_nota_comportamento_fatura_em_atraso:
+                        type: string
+                      tr_801_indicadores_positivos_comportamento_consumo:
+                        type: string
+                      tr_804_status_consumidor:
+                        type: string
+                      tr_940_mensagem_registro:
+                        type: string
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=criminal_record_certificate":
+    post:
+      summary: Criminal Record Certificate
+      description: Descrição pendente.
+      operationId: post_criminal_record_certificate
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  criminal_record_certificate:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: NÃO CONSTA
+                      cpf:
+                        type: string
+                        example: '09845678999'
+                      url:
+                        type: string
+                        example: https://certidoes-datahub.s3.amazonaws.com/antecedentes-criminais/grupo-teste/documento_09845678999.pdf
+                      last_request:
+                        type: string
+                        example: 05/12/2024 17:29:52
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=damage_insurance":
+    post:
+      summary: Damage Insurance
+      description: Descrição pendente.
+      operationId: post_damage_insurance
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  damage_insurance:
+                    type: object
+                    properties:
+                      id_corretor:
+                        type: string
+                        description: Identificação do corretor
+                        example: '48895325855'
+                      cpf:
+                        type: string
+                        description: CNPJ
+                        example: '12345678910'
+                      protocolo:
+                        type: string
+                        example: '202026856'
+                      nome_completo:
+                        type: string
+                        example: SÃO JOSÉ DE NAZARÉ
+                      recadastrado:
+                        type: boolean
+                        example: true
+                      situacao:
+                        type: string
+                        example: ATIVO
+                      produtos:
+                        type: string
+                        example: MICROSSEGUROS, PLANOS DE CAPITALIZAÇÃO, PLANOS DE
+                          PREVIDÊNCIA COMPLEME…
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=emails_extended":
+    post:
+      summary: Emails Extended
+      description: Contém informações sobre os emails, como usuário, domínio, tipo
+        e prioridade.
+      operationId: post_emails_extended
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  emails_extended:
+                    type: object
+                    description: Contém informações sobre os emails, como usuário,
+                      domínio, tipo e prioridade.
+                    properties:
+                      emails_extended:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                              description: Email
+                              example: ZOOX@ZOOXSMART.COM
+                            dominio:
+                              type: string
+                              description: Dominio
+                              example: "@ZOOXSMART.COM"
+                            usuario:
+                              type: string
+                              description: Usuário
+                              example: ZOOX
+                            tipo:
+                              type: string
+                              description: Tipo
+                              example: PESSOAL
+                            prioridade:
+                              type: integer
+                              description: Prioridade
+                              example: 1
+                        description: Contém informações sobre os emails, como usuário,
+                          domínio, tipo e prioridade.
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=financial_data":
+    post:
+      summary: Financial Data
+      description: Contém informações sobre a estimativa de renda e de patrimônio.
+      operationId: post_financial_data
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cep:
+                  type: string
+                  description: "..."
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cep
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  financial_data:
+                    type: object
+                    description: Contém informações sobre a estimativa de renda e
+                      de patrimônio.
+                    properties:
+                      patrimonio_estimado:
+                        type: string
+                        description: Patrimônio estimado
+                        example: ABAIXO DE 100K
+                      renda_estimada_v2:
+                        type: string
+                        description: Renda estimada
+                        example: 1 A 2 SM
+                      poder_de_compra:
+                        type: string
+                        description: Classe social com base na renda
+                        example: Classe C2 - DE 1 A 3 SM
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=kyc":
+    post:
+      summary: Kyc
+      description: Sanções Nacionais e Internacionais
+      operationId: post_kyc
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kyc:
+                    type: object
+                    description: Sanções Nacionais e Internacionais
+                    properties:
+                      kyc:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            fonte:
+                              type: string
+                              description: Fonte
+                              example: INTERPOL
+                            taxa_associacao:
+                              type: integer
+                              description: Taxa de associação
+                              example: 3
+                            flag_homonimo:
+                              type: boolean
+                              description: Flag homonimo
+                            presente_na_fonte:
+                              type: boolean
+                              description: Flag presente na fonte
+                            data_ultima_atualizacao:
+                              type: string
+                              description: Data ultima atualização
+                              example: '2022-01-01'
+                            detalhes:
+                              type: string
+                              description: Detalhes da sanção
+                        description: Sanções Nacionais e Internacionais
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=labor_debts_certificate":
+    post:
+      summary: Labor Debts Certificate
+      description: Descrição pendente.
+      operationId: post_labor_debts_certificate
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  labor_debts_certificate:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        example: https://certidoes-datahub.com/debitos-trabalhistas/grupo-teste/certidao_09845678999.pdf
+                      status:
+                        type: string
+                        example: NÃO CONSTA
+                      cpf:
+                        type: string
+                        example: '09845678999'
+                      expedition:
+                        type: string
+                        example: 11/12/2024, às 16:48:22
+                      last_request:
+                        type: string
+                        example: 11/12/2024 16:48:27
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=money_laundering_v2":
+    post:
+      summary: Money Laundering V2
+      description: Contém informações cadastrais, localização, sanções nacionais e
+        internacionais, tipos de processos, pessoa politicamente exposta e notícias,
+        além das flags de presença em cada uma das respectivas informações e o score
+        de risco.
+      operationId: post_money_laundering_v2
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  money_laundering_v2:
+                    type: object
+                    description: Contém informações cadastrais, localização, sanções
+                      nacionais e internacionais, tipos de processos, pessoa politicamente
+                      exposta e notícias, além das flags de presença em cada uma das
+                      respectivas informações e o score de risco.
+                    properties:
+                      dados_basicos:
+                        type: string
+                        description: Contém informações básicas como documento, nome
+                          completo, data de nascimento, genero, status do documento
+                          na receita, estado civil e nome da mãe.
+                      flag_fronteira:
+                        type: boolean
+                        description: Flag fronteira
+                      flag_noticias:
+                        type: boolean
+                        description: Flag possui notícias
+                      flag_pep:
+                        type: boolean
+                        description: Flag possui pep
+                      flag_processos_ambientais:
+                        type: boolean
+                        description: Flag possui processos ambientais
+                      flag_processos_criminais:
+                        type: boolean
+                        description: Flag possui processos criminais
+                      flag_processos_eleitorais:
+                        type: boolean
+                        description: Flag possui processos eleitorais
+                      flag_processos_lavagem:
+                        type: boolean
+                        description: Flag possui processos lavagem
+                      flag_processos_trabalho_escravo:
+                        type: boolean
+                        description: Flag possui processos trabalho escravo
+                      flag_processos_tributarios:
+                        type: boolean
+                        description: Flag possui processos tributarios
+                      flag_sancoes:
+                        type: boolean
+                        description: Flag possui sanções
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=money_laundering_v3":
+    post:
+      summary: Money Laundering V3
+      description: Contém informações cadastrais, localização, sanções nacionais e
+        internacionais, tipos de processos, pessoa politicamente exposta e notícias,
+        além das flags de presença em cada uma das respectivas informações e o score
+        de risco.
+      operationId: post_money_laundering_v3
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  money_laundering_v3:
+                    type: object
+                    description: Contém informações cadastrais, localização, sanções
+                      nacionais e internacionais, tipos de processos, pessoa politicamente
+                      exposta e notícias, além das flags de presença em cada uma das
+                      respectivas informações e o score de risco.
+                    properties:
+                      dados_basicos:
+                        type: string
+                        description: Contém informações básicas como documento, nome
+                          completo, data de nascimento, genero, status do documento
+                          na receita, estado civil e nome da mãe.
+                      flag_fronteira:
+                        type: boolean
+                        description: Flag fronteira
+                      flag_noticias:
+                        type: boolean
+                        description: Flag possui notícias
+                      flag_pep:
+                        type: boolean
+                        description: Flag possui pep
+                      flag_processos_ambientais:
+                        type: boolean
+                        description: Flag possui processos ambientais
+                      flag_processos_criminais:
+                        type: boolean
+                        description: Flag possui processos criminais
+                      flag_processos_eleitorais:
+                        type: boolean
+                        description: Flag possui processos eleitorais
+                      flag_processos_lavagem:
+                        type: boolean
+                        description: Flag possui processos lavagem
+                      flag_processos_trabalho_escravo:
+                        type: boolean
+                        description: Flag possui processos trabalho escravo
+                      flag_processos_tributarios:
+                        type: boolean
+                        description: Flag possui processos tributarios
+                      flag_sancoes:
+                        type: boolean
+                        description: Flag possui sanções
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=obits":
+    post:
+      summary: Obits
+      description: Descrição pendente.
+      operationId: post_obits
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  obits:
+                    type: object
+                    properties:
+                      cpf:
+                        type: string
+                        description: CPF
+                        example: 0
+                      indicacao_obito:
+                        type: boolean
+                        description: Se existe indicação de óbito
+                        example: true
+                      origem_obito:
+                        type: string
+                        description: Origem da informação
+                      ano_obito:
+                        type: string
+                        description: Ano do óbito
+                        example: '1998'
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=pep":
+    post:
+      summary: Pep
+      description: Contém informações que incluem dados sobre pessoas politicamente
+        expostas, com informações de período, departamento e fonte das informações.
+      operationId: post_pep
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pep:
+                    type: object
+                    description: Contém informações que incluem dados sobre pessoas
+                      politicamente expostas, com informações de período, departamento
+                      e fonte das informações.
+                    properties:
+                      ativo:
+                        type: string
+                        description: Flag se a pessoa é ou não PEP
+                        example: true
+                      servidor_publico:
+                        type: string
+                        description: Flag se a pessoa é ou não servidor público
+                        example: false
+                      tipo_relacionamento:
+                        type: string
+                        description: Tipo de vínculo que a pessoa tem com o PEP
+                        example: MÃE
+                      cpf:
+                        type: string
+                        description: CPF
+                        example: '05896325874'
+                      nome:
+                        type: string
+                        description: Nome completo
+                        example: ANDREAS ANTUNES
+                      descricao_funcao:
+                        type: string
+                        description: Descrição da função
+                        example: PREFEITO
+                      nome_orgao:
+                        type: string
+                        description: Nome do órgão
+                        example: MUN. DE VILA VELHA-ES
+                      data_inicio_exercicio:
+                        type: string
+                        description: Data inicio
+                        example: '2021-01-01'
+                      data_fim_exercicio:
+                        type: string
+                        description: Data fim
+                        example: '2025-12-31'
+                      data_fim_carencia:
+                        type: string
+                        description: Data fim da carência
+                        example: '2029-12-31'
+                      nivel:
+                        type: string
+                        description: Nível 1 se o próprio é PEP, nível 2 se alguem
+                          próximo é PEP
+                        example: 2
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=phones_extended":
+    post:
+      summary: Phones Extended
+      description: Contém informações sobre os telefones, como DDD, número, tipo e
+        prioridade.
+      operationId: post_phones_extended
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  phones_extended:
+                    type: object
+                    description: Contém informações sobre os telefones, como DDD,
+                      número, tipo e prioridade.
+                    properties:
+                      phones_extended:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ddi:
+                              type: string
+                              description: DDI
+                              example: '55'
+                            ddd:
+                              type: string
+                              description: DDD
+                              example: '21'
+                            numero:
+                              type: string
+                              description: Número
+                              example: '999999999'
+                            tipo:
+                              type: string
+                              description: Tipo
+                              example: MOBILE
+                            prioridade:
+                              type: integer
+                              description: Prioridade
+                              example: 1
+                            possui_whatsapp:
+                              type: boolean
+                              description: Possui Whatsapp
+                              example: true
+                            procon_nao_perturbe:
+                              type: boolean
+                              description: Cadastro no Procon de Não Perturbe
+                              example: true
+                        description: Contém informações sobre os telefones, como DDD,
+                          número, tipo e prioridade.
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=processes":
+    post:
+      summary: Processes
+      description: Contém informações sobre processos judiciais e administrativos,
+        incluindo detalhes sobre as partes, movimentações, decisões, número e tipo
+        de processo.
+      operationId: post_processes
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  processes:
+                    type: object
+                    description: Contém informações sobre processos judiciais e administrativos,
+                      incluindo detalhes sobre as partes, movimentações, decisões,
+                      número e tipo de processo.
+                    properties:
+                      processos:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            numero:
+                              type: string
+                              description: Número do processo
+                              example: '0300000000000000001'
+                            tipo:
+                              type: string
+                              description: Tipo
+                              example: PROCEDIMENTO DO JUIZADO ESPECIAL CIVEL
+                            assunto_principal:
+                              type: string
+                              description: Assunto principal
+                              example: DANO MORAL OUTROS - CDC; DANO MATERIAL - CDC;
+                                ACIDENTE AEREO / CONTRATOS DE CONSUMO
+                            nome_corte:
+                              type: string
+                              description: Nome da corte
+                              example: TSJ
+                            nivel_corte:
+                              type: string
+                              description: Nível da corte
+                              example: '1'
+                            tipo_corte:
+                              type: string
+                              description: Tipo da corte
+                              example: ESPECIAL CIVEL
+                            status:
+                              type: string
+                              description: Status
+                              example: ARQUIVADO
+                            estado:
+                              type: string
+                              description: Estado
+                              example: RJ
+                            valor_causa:
+                              type: integer
+                              description: Valor da causa
+                              example: 0
+                            data_publicacao:
+                              type: string
+                              description: Data de publicação
+                              example: '2014-10-10'
+                            data_notificacao:
+                              type: string
+                              description: Data de notificação
+                              example: '2014-09-10'
+                            decisoes:
+                              type: string
+                              description: Decisões
+                            movimentacoes:
+                              type: string
+                              description: Movimentações
+                            partes:
+                              type: string
+                              description: Partes
+                        description: Processos
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=processes_details":
+    post:
+      summary: Processes Details
+      description: Contém informações sobre processos judiciais e administrativos,
+        incluindo detalhes sobre as partes, movimentações, decisões, número e tipo
+        de processo.
+      operationId: post_processes_details
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  processes_details:
+                    type: object
+                    description: Contém informações sobre processos judiciais e administrativos,
+                      incluindo detalhes sobre as partes, movimentações, decisões,
+                      número e tipo de processo.
+                    properties:
+                      processos:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            numero:
+                              type: string
+                              description: Número do processo
+                              example: '0300000000000000001'
+                            tipo:
+                              type: string
+                              description: Tipo
+                              example: PROCEDIMENTO DO JUIZADO ESPECIAL CIVEL
+                            assunto_principal:
+                              type: string
+                              description: Assunto principal
+                              example: DANO MORAL OUTROS - CDC; DANO MATERIAL - CDC;
+                                ACIDENTE AEREO / CONTRATOS DE CONSUMO
+                            nome_corte:
+                              type: string
+                              description: Nome da corte
+                              example: TSJ
+                            nivel_corte:
+                              type: string
+                              description: Nível da corte
+                              example: '1'
+                            tipo_corte:
+                              type: string
+                              description: Tipo da corte
+                              example: ESPECIAL CIVEL
+                            status:
+                              type: string
+                              description: Status
+                              example: ARQUIVADO
+                            estado:
+                              type: string
+                              description: Estado
+                              example: RJ
+                            valor_causa:
+                              type: integer
+                              description: Valor da causa
+                              example: 0
+                            data_publicacao:
+                              type: string
+                              description: Data de publicação
+                              example: '2014-10-10'
+                            data_notificacao:
+                              type: string
+                              description: Data de notificação
+                              example: '2014-09-10'
+                            decisoes:
+                              type: string
+                              description: Decisões
+                            movimentacoes:
+                              type: string
+                              description: Movimentações
+                            partes:
+                              type: string
+                              description: Partes
+                        description: Processos
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=profession_data":
+    post:
+      summary: Profession Data
+      description: Contém informações sobre o histórico profissional da pessoa e informações
+        do linkedin.
+      operationId: post_profession_data
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  profession_data:
+                    type: object
+                    description: Contém informações sobre o histórico profissional
+                      da pessoa e informações do linkedin.
+                    properties:
+                      profession_data:
+                        type: array
+                        items:
+                          type: object
+                          description: Contém informações sobre o histórico profissional
+                            da pessoa e informações do linkedin.
+                          properties:
+                            dados_profissionais:
+                              type: string
+                            linkedin:
+                              type: string
+                        description: Contém informações sobre o histórico profissional
+                          da pessoa e informações do linkedin.
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=public_employees":
+    post:
+      summary: Public Employees
+      description: Descrição pendente.
+      operationId: post_public_employees
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  public_employees:
+                    type: object
+                    properties:
+                      public_employees:
+                        type: array
+                        items:
+                          type: object
+                          description: Contém informações que incluem dados sobre
+                            servidores públicos, com informações de período, setor
+                            e status.
+                          properties:
+                            data_inicio_exercicio:
+                              type: string
+                              description: Data início do trabalho
+                              example: 01-01-2021
+                            nome_empregador:
+                              type: string
+                              description: Nome do empregador
+                              example: PRESIDÊNCIA DA REPÚBLICA
+                            data_fim_exercicio:
+                              type: string
+                              description: Data fim do trabalho
+                              example: 31-12-2021
+                            estado:
+                              type: string
+                              description: Estado
+                              example: DF
+                            nivel:
+                              type: string
+                              description: Nível da função
+                              example: PRESIDENTE
+                            pais:
+                              type: string
+                              description: País
+                              example: BRASIL
+                            setor:
+                              type: string
+                              description: Setor
+                              example: FEDERAL
+                            status:
+                              type: string
+                              description: Status do cargo
+                              example: INATIVO
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=related_people":
+    post:
+      summary: Related People
+      description: Contém informações sobre as pessoas relacionadas a um indivíduo,
+        incluindo família, colegas e outros relacionamentos não-profissionais e retorna
+        dados como o nome completo da pessoa relacionada, documento, país e tipo de
+        relacionamento.
+      operationId: post_related_people
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  related_people:
+                    type: object
+                    description: Contém informações sobre as pessoas relacionadas
+                      a um indivíduo, incluindo família, colegas e outros relacionamentos
+                      não-profissionais e retorna dados como o nome completo da pessoa
+                      relacionada, documento, país e tipo de relacionamento.
+                    properties:
+                      related_people:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            doc_pessoa_relacionada:
+                              type: string
+                              description: Documento da pessoa
+                              example: '12211111112'
+                            tipo_doc:
+                              type: string
+                              description: Tipo de documento
+                              example: CPF
+                            nome:
+                              type: string
+                              description: Nome da pessoa
+                              example: ZOOX ARMSTRONG
+                            pais:
+                              type: string
+                              description: País
+                              example: BRASIL
+                            tipo_pessoa_relacionada:
+                              type: string
+                              description: Tipo de relacionamento
+                              example: FILHO
+                        description: Contém informações sobre as pessoas relacionadas
+                          a um indivíduo, incluindo família, colegas e outros relacionamentos
+                          não-profissionais e retorna dados como o nome completo da
+                          pessoa relacionada, documento, país e tipo de relacionamento.
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=social_assistance":
+    post:
+      summary: Social Assistance
+      description: Descrição pendente.
+      operationId: post_social_assistance
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  social_assistance:
+                    type: object
+                    properties:
+                      recebendo_assistencia:
+                        type: boolean
+                        description: Está recebendo atualmente
+                        example: true
+                      assistencias_sociais:
+                        type: array
+                        items:
+                          type: object
+                          description: Contém informações sobre benefícios entregues
+                            pelos governos, como nome do auxílio, valor fornecido,
+                            a data inicial e final.
+                          properties:
+                            nome_auxilio:
+                              type: string
+                              description: Nome do auxilio
+                              example: ARMSTRONG
+                            pais:
+                              type: string
+                              description: País
+                              example: BRASIL
+                            estado:
+                              type: string
+                              description: Estado
+                              example: MS
+                            qtd_parcelas:
+                              type: integer
+                              description: Quantidade de parcelas
+                            valor_medio:
+                              type: number
+                              description: Valor médio
+                              example: 400
+                            valor_ultima_parcela:
+                              type: number
+                              description: Valor da última parcela
+                              example: 200
+                            data_inicio:
+                              type: string
+                              description: Data inicio
+                              example: '1930-08-05'
+                            data_fim:
+                              type: string
+                              description: Data fim
+                              example: '2012-08-05'
+                            recebendo_assistencia:
+                              type: boolean
+                              description: Está recebendo atualmente
+                              example: true
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=university_student_data":
+    post:
+      summary: University Student Data
+      description: Contém informações sobre a estimativa do nível de escolaridade,
+        instituição e histórico acadêmico.
+      operationId: post_university_student_data
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  university_student_data:
+                    type: object
+                    description: Contém informações sobre a estimativa do nível de
+                      escolaridade, instituição e histórico acadêmico.
+                    properties:
+                      university_student_data:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            nivel:
+                              type: string
+                              description: Nível
+                              example: GRADUADO
+                            instituicao:
+                              type: string
+                              description: Instituição
+                              example: UNIVERSIDADE ZOOX
+                            curso:
+                              type: string
+                              description: Curso
+                              example: ANALISTA DE DADOS
+                            ano_inicio:
+                              type: string
+                              description: Ano de início
+                              example: '2021'
+                            ano_termino:
+                              type: string
+                              description: Ano de término
+                              example: '2022'
+                        description: Contém informações sobre a estimativa do nível
+                          de escolaridade, instituição e histórico acadêmico.
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/person/cpf?datasets=vehicles_fleet_pf":
+    post:
+      summary: Vehicles Fleet Pf
+      description: Descrição pendente.
+      operationId: post_vehicles_fleet_pf
+      tags:
+      - Pessoa Física (PF)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                  description: "..."
+              required:
+              - cpf
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicles_fleet_pf:
+                    type: object
+                    properties:
+                      veiculos:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            marca_modelo:
+                              type: string
+                              example: TOYOTA/CCROSS XRE 20
+                            placa:
+                              type: string
+                              example: ABC1234
+                            renavam:
+                              type: string
+                              example: '11111111111'
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=contact_info_data":
+    post:
+      summary: Contact Info Data
+      description: Contém informações sobre os telefones e emails de uma empresa.
+      operationId: post_contact_info_data
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contact_info_data:
+                    type: object
+                    description: Contém informações sobre os telefones e emails de
+                      uma empresa.
+                    properties:
+                      ddd_1:
+                        type: string
+                        description: DDD telefone principal
+                        example: '11'
+                      telefone_1:
+                        type: string
+                        description: Telefone principal da empresa
+                        example: '32556687'
+                      ddd_2:
+                        type: string
+                        description: DDD telefone secundário
+                        example: '21'
+                      telefone_2:
+                        type: string
+                        description: Telefone secundário da empresa
+                        example: '988853655'
+                      ddd_fax:
+                        type: string
+                        description: DDD telefone fax
+                        example: '21'
+                      telefone_fax:
+                        type: string
+                        description: Telefone fax da empresa
+                        example: '988853655'
+                      email:
+                        type: string
+                        description: Email da empresa
+                        example: BANCODOPOVO@BDP.COM.BR
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=corporate_structure":
+    post:
+      summary: Corporate Structure
+      description: Descrição pendente.
+      operationId: post_corporate_structure
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  corporate_structure:
+                    type: object
+                    properties:
+                      corporate_structure:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            cnpj_antecessor:
+                              type: string
+                              example: '08668202'
+                            tipo_socio:
+                              type: string
+                              example: PESSOA JURIDICA
+                            doc_socio:
+                              type: string
+                              example: '09845678999'
+                            nome_socio:
+                              type: string
+                              example: GIOVANNI MARCOS LEITE
+                            dt_entrada_sociedade:
+                              type: string
+                              example: '2018-03-23'
+                            qualificacao_socio:
+                              type: string
+                              example: Sócio
+                            nivel_conexao:
+                              type: integer
+                              example: 1
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=labor_debts_certificate_pj":
+    post:
+      summary: Labor Debts Certificate Pj
+      description: Descrição pendente.
+      operationId: post_labor_debts_certificate_pj
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  labor_debts_certificate_pj:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: NÃO CONSTA
+                      cnpj:
+                        type: string
+                        example: '08668202000118'
+                      expedition:
+                        type: string
+                        example: '09/12/2024, às 18:31:12'
+                      last_request:
+                        type: string
+                        example: '09/12/2024 18:31:14'
+                      url:
+                        type: string
+                        example: https://certidoes-datahub.s3.amazonaws.com/debitos-trabalhistas/grupo-teste/certidao_08668202000118.pdf
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=location_data":
+    post:
+      summary: Location Data
+      description: Contém informações sobre o endereço, como logradouro, CEP, número,
+        cidade, estado e sua geolocalização.
+      operationId: post_location_data
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location_data:
+                    type: object
+                    description: Contém informações sobre o endereço, como logradouro,
+                      CEP, número, cidade, estado e sua geolocalização.
+                    properties:
+                      endereco_completo:
+                        type: string
+                        description: Endereço da empresa
+                        example: RUA JOSÉ, 23, SALA 6, CENTRO, RIO DE JANEIRO, 88693558
+                      tipo_logradouro:
+                        type: string
+                        description: Tipo de logradouro da empresa
+                        example: RUA
+                      logradouro:
+                        type: string
+                        description: Logradouro da empresa
+                        example: JOSÉ
+                      numero:
+                        type: string
+                        description: Número do endereço da empresa
+                        example: '23'
+                      complemento:
+                        type: string
+                        description: Complemento do endereço da empresa
+                        example: SALA 6
+                      cep:
+                        type: string
+                        description: CEP da empresa
+                        example: '88693558'
+                      bairro:
+                        type: string
+                        description: Bairro ou distrito da empresa
+                        example: CENTRO
+                      municipio:
+                        type: string
+                        description: Município da empresa
+                        example: RIO DE JANEIRO
+                      uf:
+                        type: string
+                        description: Estado da empresa
+                        example: RJ
+                      latitude:
+                        type: string
+                        description: Latitude do endereço da empresa
+                        example: 41.40338
+                      longitude:
+                        type: string
+                        description: Longitude do endereço da empresa
+                        example: 2.17403
+                      mapa:
+                        type: string
+                        description: Mapa da empresa
+                        example: https://www.google.com/maps?q=AVENIDA%20DAS%20AMERICAS%20500%20RIO%20DE%20JANEIRO%20-%20RJ
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=money_laundering_qsa_v2":
+    post:
+      summary: Money Laundering Qsa V2
+      description: Contém informações cadastrais da empresa como dados do CNAE, faturamento,
+        situação na receita, e seus sócios com dados cadastrais, status na receita
+        federal, indicação a obito, além das flags de presença em notícias, sanções,
+        processos, pessoa politicamente exposta e o score de risco.
+      operationId: post_money_laundering_qsa_v2
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  money_laundering_qsa_v2:
+                    type: object
+                    description: Contém informações cadastrais da empresa como dados
+                      do CNAE, faturamento, situação na receita, e seus sócios com
+                      dados cadastrais, status na receita federal, indicação a obito,
+                      além das flags de presença em notícias, sanções, processos,
+                      pessoa politicamente exposta e o score de risco.
+                    properties:
+                      dados_cadastrais:
+                        type: string
+                        description: Contém informações básicas como CNPJ, razão social,
+                          data de abertura, situação cadastral, natureza jurídica,
+                          código e descrição CNAE, CNAES secundários, porte da empresa,
+                          capital social e faturamento.
+                      dados_localizacao:
+                        type: string
+                        description: Contém informações sobre o endereço, como logradouro,
+                          CEP, número, cidade, estado e sua geolocalização.
+                      dados_contato:
+                        type: string
+                        description: Contém informações sobre os telefones e emails
+                          de uma empresa.
+                      flag_noticias:
+                        type: boolean
+                        description: Flag possui notícias
+                      flag_sancoes:
+                        type: boolean
+                        description: Flag possui sanções
+                      nivel_risco_socios:
+                        type: integer
+                        description: Maior nível de risco entre os sócios da empresa
+                        example: 8
+                      nivel_risco:
+                        type: integer
+                        description: Nível geral de risco da pessoa
+                        example: 10
+                      socios:
+                        type: string
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=money_laundering_qsa_v3_api":
+    post:
+      summary: Money Laundering Qsa V3 Api
+      description: Contém informações cadastrais, localização, sanções nacionais e
+        internacionais, tipos de processos, pessoa politicamente exposta e notícias,
+        além das flags de presença em cada uma das respectivas informações e o score
+        de risco.
+      operationId: post_money_laundering_qsa_v3_api
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  money_laundering_qsa_v3_api:
+                    type: object
+                    description: Contém informações cadastrais, localização, sanções
+                      nacionais e internacionais, tipos de processos, pessoa politicamente
+                      exposta e notícias, além das flags de presença em cada uma das
+                      respectivas informações e o score de risco.
+                    properties:
+                      dados_basicos:
+                        type: string
+                        description: Contém informações básicas como documento, nome
+                          completo, data de nascimento, genero, status do documento
+                          na receita, estado civil e nome da mãe.
+                      flag_fronteira:
+                        type: boolean
+                        description: Flag fronteira
+                      flag_noticias:
+                        type: boolean
+                        description: Flag possui notícias
+                      flag_pep:
+                        type: boolean
+                        description: Flag possui pep
+                      flag_processos_ambientais:
+                        type: boolean
+                        description: Flag possui processos ambientais
+                      flag_processos_criminais:
+                        type: boolean
+                        description: Flag possui processos criminais
+                      flag_processos_eleitorais:
+                        type: boolean
+                        description: Flag possui processos eleitorais
+                      flag_processos_lavagem:
+                        type: boolean
+                        description: Flag possui processos lavagem
+                      flag_processos_trabalho_escravo:
+                        type: boolean
+                        description: Flag possui processos trabalho escravo
+                      flag_processos_tributarios:
+                        type: boolean
+                        description: Flag possui processos tributarios
+                      flag_sancoes:
+                        type: boolean
+                        description: Flag possui sanções
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=partners_address":
+    post:
+      summary: Partners Address
+      description: Contém informações sobre os endereços de todos os sócios, como
+        logradouro, CEP, número, cidade, estado, tipo e prioridade.
+      operationId: post_partners_address
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  partners_address:
+                    type: object
+                    description: Contém informações sobre os endereços de todos os
+                      sócios, como logradouro, CEP, número, cidade, estado, tipo e
+                      prioridade.
+                    properties:
+                      partners_address:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            doc_socio:
+                              type: string
+                              description: Número do documento do sócio
+                              example: '48895325855'
+                            endereco_completo:
+                              type: string
+                              description: Endereço Completo
+                              example: RUA EQUADOR 2022
+                            tipo:
+                              type: string
+                              description: Tipo
+                              example: RUA
+                            titulo:
+                              type: string
+                              description: Titulo
+                              example: DOUTOR
+                            logradouro:
+                              type: string
+                              description: Logradouro
+                              example: JOSE
+                            numero:
+                              type: string
+                              description: Número
+                              example: '40'
+                            complemento:
+                              type: string
+                              description: Complemento
+                              example: CS 4
+                            bairro:
+                              type: string
+                              description: Bairro
+                              example: BAIRRO ZOOX
+                            cidade:
+                              type: string
+                              description: Cidade
+                              example: RIO DE JANEIRO
+                            uf:
+                              type: string
+                              description: UF
+                              example: SP
+                            cep:
+                              type: string
+                              description: CEP
+                              example: 11111000
+                            tipo_endereco:
+                              type: string
+                              description: Tipo de endereço
+                              example: TRABALHO
+                            prioridade:
+                              type: integer
+                              description: Prioridade
+                              example: 1
+                            nivel:
+                              type: number
+                              description: Nivel do sócio em relação CNPJ pesquisado
+                              example: 1
+                            documento_relacionado:
+                              type: string
+                              description: CNPJ raiz relacionado diretamente ao sócio
+                              example: '08668202'
+                        description: Contém informações sobre os endereços de todos
+                          os sócios, como logradouro, CEP, número, cidade, estado,
+                          tipo e prioridade.
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=partners_companies":
+    post:
+      summary: Partners Companies
+      description: Descrição pendente.
+      operationId: post_partners_companies
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  partners_companies:
+                    type: object
+                    properties:
+                      partners_companies:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            cnpj:
+                              type: string
+                              description: CNPJ da empresa
+                              example: '08668202000118'
+                            razao_social:
+                              type: string
+                              description: Razão social da empresa
+                              example: BANCO DO POVO S.A.
+                            data_abertura:
+                              type: string
+                              description: Data de abertura da empresa
+                              example: 11/03/2022
+                            cnae_classificacao:
+                              type: string
+                              description: CNAE classificação da empresa
+                              example: MERCADOS, SUPERMERCADOS E CONVENIÊNCIA
+                            porte_empresa:
+                              type: string
+                              description: Porte da empresa
+                              example: MÉDIA E GRANDE EMPRESA
+                            faturamento:
+                              type: string
+                              description: Faturamento da empresa
+                              example: ACIMA DE 1BI
+                            qualificacao_socio:
+                              type: string
+                              description: Qualificação do Sócio
+                              example: DIRETOR
+                            situacao_cadastral:
+                              type: string
+                              description: Situação da empresa
+                              example: ATIVA
+                            natureza_juridica:
+                              type: string
+                              description: Natureza Jurídica da empresa
+                              example: '2038'
+                            dt_entrada_sociedade:
+                              type: string
+                              description: Data de entrada na sociedade da empresa
+                              example: 11/07/2023
+                            endereco_completo:
+                              type: string
+                              description: Endereço da empresa
+                              example: Rua Joaquim Couto 43 CENTRO PARATI - RJ - 88693558
+                            municipio:
+                              type: string
+                              description: Cidade da empresa
+                              example: Parati
+                            uf:
+                              type: string
+                              description: Estado da empresa
+                              example: Rio de Janeiro
+                            tipo_logradouro:
+                              type: string
+                              description: Tipo de logradouro da empresa
+                              example: RUA
+                            logradouro:
+                              type: string
+                              description: Logradouro da empresa
+                              example: JOSÉ
+                            numero:
+                              type: string
+                              description: Número do endereço da empresa
+                              example: '23'
+                            complemento:
+                              type: string
+                              description: Complemento do endereço da empresa
+                              example: SALA 6
+                            cep:
+                              type: string
+                              description: CEP da empresa
+                              example: '88693558'
+                            bairro:
+                              type: string
+                              description: Bairro ou distrito da empresa
+                              example: CENTRO
+                            latitude:
+                              type: string
+                              description: Latitude
+                            longitude:
+                              type: string
+                              description: Longitude
+                            mapa:
+                              type: string
+                              description: URL do link do google maps
+                              example: https://www.google.com/maps?q=AVENIDA%20DAS%20AMERICAS%20500%20RIO%20DE%20JANEIRO%20-%20RJ
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=partners_email":
+    post:
+      summary: Partners Email
+      description: Contém informações sobre os emails de todos os sócios, como usuário,
+        domínio, tipo e prioridade.
+      operationId: post_partners_email
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  partners_email:
+                    type: object
+                    description: Contém informações sobre os emails de todos os sócios,
+                      como usuário, domínio, tipo e prioridade.
+                    properties:
+                      partners_email:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            doc_socio:
+                              type: string
+                              description: Número do documento do sócio
+                              example: '48895325855'
+                            email_1:
+                              type: string
+                              description: Email principal
+                              example: andrade.roberto@cefecap.com.br
+                            email_2:
+                              type: string
+                              description: Email secundário
+                              example: roberto.andrade@gmail.com.br
+                            email_3:
+                              type: string
+                              description: Email terciário
+                              example: beto-andrade@hotmail.com
+                            nivel:
+                              type: number
+                              description: Nivel do sócio em relação CNPJ pesquisado
+                              example: 1
+                            documento_relacionado:
+                              type: string
+                              description: CNPJ raiz relacionado diretamente ao sócio
+                              example: '08668202'
+                        description: Contém informações sobre os emails de todos os
+                          sócios, como usuário, domínio, tipo e prioridade.
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=partners_phone":
+    post:
+      summary: Partners Phone
+      description: Contém informações sobre os telefones de todos os sócios, como
+        DDD, número, tipo e prioridade.
+      operationId: post_partners_phone
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  partners_phone:
+                    type: object
+                    description: Contém informações sobre os telefones de todos os
+                      sócios, como DDD, número, tipo e prioridade.
+                    properties:
+                      partners_phone:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            doc_socio:
+                              type: string
+                              description: Número do documento do sócio
+                              example: '48895325855'
+                            ddi:
+                              type: string
+                              description: DDI
+                              example: '55'
+                            ddd:
+                              type: string
+                              description: DDD
+                              example: '21'
+                            numero:
+                              type: string
+                              description: Número
+                              example: '999999999'
+                            tipo:
+                              type: string
+                              description: Tipo
+                              example: MOBILE
+                            prioridade:
+                              type: integer
+                              description: Prioridade
+                              example: 1
+                            nivel:
+                              type: number
+                              description: Nivel do sócio em relação CNPJ pesquisado
+                              example: 1
+                            documento_relacionado:
+                              type: string
+                              description: CNPJ raiz relacionado diretamente ao sócio
+                              example: '08668202'
+                        description: Contém informações sobre os telefones de todos
+                          os sócios, como DDD, número, tipo e prioridade.
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=registration_data":
+    post:
+      summary: Registration Data
+      description: Contém informações básicas como CNPJ, razão social, data de abertura,
+        situação cadastral, natureza jurídica, código e descrição CNAE, CNAES secundários,
+        porte da empresa, capital social e faturamento.
+      operationId: post_registration_data
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  registration_data:
+                    type: object
+                    description: Contém informações básicas como CNPJ, razão social,
+                      data de abertura, situação cadastral, natureza jurídica, código
+                      e descrição CNAE, CNAES secundários, porte da empresa, capital
+                      social e faturamento.
+                    properties:
+                      cnpj:
+                        type: string
+                        description: CNPJ da empresa
+                        example: '08668202000118'
+                      razao_social:
+                        type: string
+                        description: Razão social da empresa
+                        example: BANCO DO POVO S.A.
+                      nome_fantasia:
+                        type: string
+                        description: Nome fantasia da empresa
+                        example: BANCO DO POVO
+                      data_abertura:
+                        type: string
+                        description: Data de abertura da empresa
+                        example: '2015-03-11'
+                      tempo_de_atividade:
+                        type: number
+                        description: Idade da empresa
+                        example: 25
+                      situacao_cadastral:
+                        type: string
+                        description: Situação cadastral da empresa
+                        example: ATIVA
+                      data_situacao_cadastral:
+                        type: string
+                        description: Data da situação cadastral da empresa
+                        example: '2015-03-11'
+                      natureza_juridica:
+                        type: string
+                        description: Natureza jurídica da empresa.
+                        example: '0000'
+                      cod_cnae:
+                        type: string
+                        description: CNAE fiscal da empresa
+                        example: '00000000'
+                      descricao_cnae:
+                        type: string
+                        description: CNAE descrição da empresa
+                        example: COMÉRCIO VAREJISTA DE MERCADORIAS EM GERAL, COM PREDOMINÂNCIA
+                          DE PRODUTOS ALIMENTÍCIOS - HIPERMERCADOS
+                      classificacao_cnae:
+                        type: string
+                        description: CNAE classificação da empresa
+                        example: MERCADOS, SUPERMERCADOS E CONVENIÊNCIA
+                      cnaes_secundarios:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            cod_cnae:
+                              type: string
+                              description: CNAE fiscal da empresa
+                              example: '00000000'
+                            descricao_cnae:
+                              type: string
+                              description: CNAE descrição da empresa
+                              example: COMÉRCIO VAREJISTA DE MERCADORIAS EM GERAL,
+                                COM PREDOMINÂNCIA DE PRODUTOS ALIMENTÍCIOS - HIPERMERCADOS
+                            classificacao_cnae:
+                              type: string
+                              description: CNAE classificação da empresa
+                              example: MERCADOS, SUPERMERCADOS E CONVENIÊNCIA
+                        description: CNAEs secundários da empresa
+                      porte_empresa:
+                        type: string
+                        description: Porte da empresa
+                        example: MÉDIA E GRANDE EMPRESA
+                      tipo_matriz_filial:
+                        type: string
+                        description: Empresa matriz ou filial
+                        example: MATRIZ
+                      qtd_funcionarios:
+                        type: string
+                        description: Quantidade de funcionários da empresa.
+                        example: DE 1.001 A 5.000 FUNCIONÁRIOS
+                      capital_social:
+                        type: number
+                        description: Capital social da empresa
+                        example: 100000
+                      faturamento:
+                        type: string
+                        description: Faturamento da empresa
+                        example: ACIMA DE 1BI
+                      situacao_especial:
+                        type: string
+                        description: Situação especial da empresa
+                        example: RECUPERACAO JUDICIAL
+                      url_linkedin:
+                        type: string
+                        description: URL do Linkedin da empresa
+                        example: https://www.linkedin.com/company/zoox-smart-data
+                      url_empresa:
+                        type: string
+                        description: URL do site da empresa
+                        example: https://zooxsmart.com/
+                      opc_mei:
+                        type: string
+                        description: Flag mei
+                        example: S
+                      opcao_simples:
+                        type: string
+                        description: Optante simples
+                        example: EXCLUÍDO DO SIMPLES
+                      cod_nat_juridica_descricao:
+                        type: string
+                        description: Código natureza jurídica
+                        example: SOCIEDADE EMPRESÁRIA LIMITADA
+                      tipo_nat_juridica_descricao:
+                        type: string
+                        description: Tipo natureza jurídica
+                        example: ENTIDADES EMPRESARIAIS
+                      data_exclusao_simples:
+                        type: string
+                        description: Data de exclusão do simples
+                        example: '2015-03-11'
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=registration_status":
+    post:
+      summary: Registration Status
+      description: Descrição pendente.
+      operationId: post_registration_status
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  registration_status:
+                    type: object
+                    properties:
+                      cnpj:
+                        type: string
+                        example: '08668202000118'
+                      last_request:
+                        type: string
+                        example: 04/12/2024 10:40:27
+                      status:
+                        type: string
+                        example: ATIVA
+                      url:
+                        type: string
+                        example: https://certidoes-datahub.s3.amazonaws.com/situacao-cadastral/teste-grupo/certidao_08668202000118.pdf
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=relationships":
+    post:
+      summary: Relationships
+      description: Contém informações básicas sobre todos os sócios da empresa, como
+        número do documento, tipo de documento, nome completo, data de nascimento,
+        qualificação e nível na sociedade.
+      operationId: post_relationships
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  relationships:
+                    type: object
+                    description: Contém informações básicas sobre todos os sócios
+                      da empresa, como número do documento, tipo de documento, nome
+                      completo, data de nascimento, qualificação e nível na sociedade.
+                    properties:
+                      relationships:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            tipo_de_documento:
+                              type: string
+                              description: Tipo de documento
+                              example: PESSOA FÍSICA
+                            documento:
+                              type: string
+                              description: Número do documento do sócio
+                              example: '12211111112'
+                            nome:
+                              type: string
+                              description: Nome completo do sócio
+                              example: ADA LOVELACE
+                            data_nascimento:
+                              type: string
+                              description: Data de nascimento
+                              example: '1930-08-05'
+                            genero:
+                              type: string
+                              description: Gênero
+                              example: M
+                            status_receita_federal:
+                              type: string
+                              description: Status receita federal
+                              example: REGULAR
+                            regiao_receita_federal:
+                              type: string
+                              description: Região receita federal
+                              example: RJ
+                            indicacao_obito:
+                              type: boolean
+                              description: Indicação óbito
+                            qualificacao:
+                              type: string
+                              description: Qualificação do sócio
+                              example: ADMINISTRADOR
+                            nacionalidade:
+                              type: string
+                              description: Nacionalidade do sócio
+                              example: BRASILEIRO
+                            nivel:
+                              type: number
+                              description: Nivel do sócio em relação CNPJ pesquisado
+                              example: 1
+                            documento_relacionado:
+                              type: string
+                              description: CNPJ raiz relacionado diretamente ao sócio
+                              example: '08668202'
+                            pis:
+                              type: string
+                              description: Número do PIS
+                              example: '086988368202'
+                        description: Contém informações básicas sobre todos os sócios
+                          da empresa, como número do documento, tipo de documento,
+                          nome completo, data de nascimento, qualificação e nível
+                          na sociedade.
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=set_business_pj":
+    post:
+      summary: Set Business Pj
+      description: Descrição pendente.
+      operationId: post_set_business_pj
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  set_business_pj:
+                    type: object
+                    properties:
+                      decisao_decisao:
+                        type: string
+                      statcon_status_consumidor:
+                        type: string
+                      demaisin_demais_informacoes:
+                        type: string
+                      credobt_credito_obtido:
+                        type: string
+                      compro_compromissos:
+                        type: string
+                      pgtpont_pagamento_pontual:
+                        type: string
+                      pgtatra_pagamento_atrasado:
+                        type: string
+                      compfut_comprometimento_futuro:
+                        type: string
+                      idenc_identificacao_completo:
+                        type: string
+                      locc_localizacao_completo:
+                        type: string
+                      scor_score:
+                        type: string
+                      soc_socios:
+                        type: string
+                      adm_administradores:
+                        type: string
+                      parsc_participacoes_socios_adm_outras_empresas:
+                        type: string
+                      parc_participacoes_empresas_consultadas:
+                        type: string
+                      con_consultas:
+                        type: string
+                      pen_pendencias_restricoes:
+                        type: string
+                      cheq1_cheques_sem_fundo:
+                        type: string
+                      cheq2_cheques_sustados:
+                        type: string
+                      cheq3_cheques_devolvidos_informados_usuario:
+                        type: string
+                      prot_protestos:
+                        type: string
+                      aco_acoes_civeis:
+                        type: string
+                      rec_falencias_recuperacao_judicial:
+                        type: string
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=set_limit_pj":
+    post:
+      summary: Set Limit Pj
+      description: Descrição pendente.
+      operationId: post_set_limit_pj
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  set_limit_pj:
+                    type: object
+                    properties:
+                      decisao_decisao:
+                        type: string
+                      cred_limite_credito:
+                        type: string
+                      idenc_identificacao_completo:
+                        type: string
+                      locc_localizacao_completo:
+                        type: string
+                      scor_score:
+                        type: string
+                      soc_socios:
+                        type: string
+                      parsc_participacoes_socios_adm_outras_empresas:
+                        type: string
+                      parc_participacoes_empresas_consultadas:
+                        type: string
+                      con_consultas:
+                        type: string
+                      prot_protestos:
+                        type: string
+                      pgtpont_pagamento_pontual:
+                        type: string
+                      pgtatra_pagamento_atrasado:
+                        type: string
+                      compfut_comprometimento_futuro:
+                        type: string
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=set_risk_pj":
+    post:
+      summary: Set Risk Pj
+      description: Descrição pendente.
+      operationId: post_set_risk_pj
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  set_risk_pj:
+                    type: object
+                    properties:
+                      statcon_status_consumidor:
+                        type: string
+                      idenb_identificacao_basico:
+                        type: string
+                      locb_localizacao_basico:
+                        type: string
+                      scor_score:
+                        type: string
+                      con_consultas:
+                        type: string
+                      pen_pendencias_restricoes:
+                        type: string
+                      cheq1_cheques_sem_fundo:
+                        type: string
+                      cheq2_cheques_sustados:
+                        type: string
+                      cheq3_cheques_devolvidos_informados_usuario:
+                        type: string
+                      prot_protestos:
+                        type: string
+                      demaisin_demais_informacoes:
+                        type: string
+                      credobt_credito_obtido:
+                        type: string
+                      compro_compromissos:
+                        type: string
+                      pgtpont_pagamento_pontual:
+                        type: string
+                      pgtatra_pagamento_atrasado:
+                        type: string
+                      compfut_comprometimento_futuro:
+                        type: string
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/company/cnpj?datasets=vehicles_fleet_pj":
+    post:
+      summary: Vehicles Fleet Pj
+      description: Descrição pendente.
+      operationId: post_vehicles_fleet_pj
+      tags:
+      - Pessoa Jurídica (PJ)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cnpj:
+                  type: string
+                  description: "..."
+              required:
+              - cnpj
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicles_fleet_pj:
+                    type: object
+                    properties:
+                      veiculos:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            marca_modelo:
+                              type: string
+                              example: VOLVO/FH 420 4X2T
+                            placa:
+                              type: string
+                              example: ABC1234
+                            renavam:
+                              type: string
+                              example: XXXXXXXXXX
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/vehicle/plate?datasets=vehicle_basic_data":
+    post:
+      summary: Vehicle Basic Data
+      description: Contém informações básicas como documento, nome completo, data
+        de nascimento, genero, status do documento na receita, estado civil e nome
+        da mãe.
+      operationId: post_vehicle_basic_data
+      tags:
+      - Veículo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                plate:
+                  type: string
+                  description: "..."
+              required:
+              - plate
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicle_basic_data:
+                    type: object
+                    description: Contém informações básicas como documento, nome completo,
+                      data de nascimento, genero, status do documento na receita,
+                      estado civil e nome da mãe.
+                    properties:
+                      cpf:
+                        type: string
+                        description: Documento da pessoa
+                        example: '12211111112'
+                      nome_completo:
+                        type: string
+                        description: Nome
+                        example: ZOOX ARMSTRONG
+                      nome_social:
+                        type: string
+                        description: Nome
+                        example: ZOOX ARMSTRONG
+                      genero:
+                        type: string
+                        description: Gênero
+                        example: M
+                      data_nascimento:
+                        type: string
+                        description: Data de nascimento
+                        example: '1930-08-05'
+                      nacionalidade:
+                        type: string
+                        description: Nacionalidade
+                        example: BRASILEIRA
+                      estado_civil:
+                        type: string
+                        description: Estado civil
+                        example: CASADO
+                      fonte_estado_civil:
+                        type: string
+                        description: Fonte estado civil
+                        example: RECEITA FEDERAL
+                      status_receita_federal:
+                        type: string
+                        description: Status receita federal
+                        example: REGULAR
+                      regiao_receita_federal:
+                        type: string
+                        description: Região receita federal
+                        example: RJ
+                      orgao_emissor:
+                        type: string
+                        description: Orgão emissor do documento
+                        example: RECEITA FEDERAL
+                      indicacao_obito:
+                        type: boolean
+                        description: Indicação óbito
+                      origem_obito:
+                        type: string
+                        description: Origem óbito
+                        example: RECEITA FEDERAL
+                      ano_obito:
+                        type: integer
+                        example: 2012
+                      nome_mae:
+                        type: string
+                        description: Nome da mãe
+                        example: ADA LOVELACE
+                      nome_pai:
+                        type: string
+                        description: Nome do pai
+                        example: ALAN TURING
+                      pis:
+                        type: string
+                        description: Número do PIS
+                        example: '28543286409'
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/vehicle/plate?datasets=vehicle_combo":
+    post:
+      summary: Vehicle Combo
+      description: Contém uma combinação das informações de referentes a débitos e
+        ANTT do veículo, incluindo detalhes como valor e faixa do IPVA, data do último
+        licenciamento, possíveis débitos e multas, além de informações sobre a situação
+        cadastral, documento, município, data de cadastro e validade.
+      operationId: post_vehicle_combo
+      tags:
+      - Veículo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                plate:
+                  type: string
+                  description: "..."
+              required:
+              - plate
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicle_combo:
+                    type: object
+                    description: Contém uma combinação das informações de referentes
+                      a débitos e ANTT do veículo, incluindo detalhes como valor e
+                      faixa do IPVA, data do último licenciamento, possíveis débitos
+                      e multas, além de informações sobre a situação cadastral, documento,
+                      município, data de cadastro e validade.
+                    properties:
+                      dados_basicos:
+                        type: string
+                      debitos:
+                        type: string
+                        description: Valor total de débitos em cada categoria.
+                      vehicle_antt:
+                        type: string
+                        description: Contém informações  de veículos relacionadas
+                          a situação cadastral, documento, município e data de cadastro
+                          e validade.
+                      licenciamentos:
+                        type: string
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
+  "/vehicle/plate?datasets=vehicle_fipe":
+    post:
+      summary: Vehicle Fipe
+      description: Contém informações  de veículos relacionadas a fipe como modelo,
+        marca, placa, código e tabela fipe, valor do veículo e ano do veículo.
+      operationId: post_vehicle_fipe
+      tags:
+      - Veículo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                plate:
+                  type: string
+                  description: "..."
+              required:
+              - plate
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicle_fipe:
+                    type: object
+                    description: Contém informações  de veículos relacionadas a fipe
+                      como modelo, marca, placa, código e tabela fipe, valor do veículo
+                      e ano do veículo.
+                    properties:
+                      referencia:
+                        type: string
+                        description: Ano/Mês de referencia
+                        example: 2023-07
+                      fipe_tabela:
+                        type: string
+                        example: '299'
+                      fipe_codigo:
+                        type: string
+                        description: Código FIPE
+                        example: 000000-0
+                      ano:
+                        type: string
+                        description: Ano de fabricação
+                        example: '1998'
+                      ano_modelo:
+                        type: string
+                        description: Ano do modelo
+                        example: '1998'
+                      tipo_veiculo:
+                        type: string
+                        description: Tipo do veículo
+                        example: carro
+                      tipo_veiculo_codigo:
+                        type: string
+                        description: Código do tipo de veículo
+                        example: '1'
+                      marca:
+                        type: string
+                        description: Marca/Fabricante do veículo
+                        example: VW - VolksWagen
+                      marca_codigo:
+                        type: string
+                        description: Código da marca do véiculo
+                        example: '59'
+                      modelo:
+                        type: string
+                        description: Modelo do véiculo
+                        example: Gol CLi / CL/ Copa/ Stones 1.6
+                      modelo_codigo:
+                        type: string
+                        description: Código do modelo do veículo
+                        example: '2421'
+                      combustivel:
+                        type: string
+                        description: Tipo de combustivel
+                        example: Gasolina
+                      combustivel_codigo:
+                        type: string
+                        description: Código do tipo de combustivel
+                        example: '1'
+                      valor:
+                        type: string
+                        description: Valor do veículo na data de referencia
+                        example: '12247.00'
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+        '500':
+          description: Erro interno
